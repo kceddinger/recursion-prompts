@@ -29,9 +29,8 @@ var sum = function(array) {
     if (array.length === 0){
         return 0;
     }
-
     var index = array.length - 1;
-    
+   
     return (array[index] + sum(array.slice(0, array.length - 1)));
 
 };
@@ -42,27 +41,49 @@ var arraySum = function(array) {
 
 // if the item at the index is an array, see if it contains an array until it doesn't
 // once it an array containing itegers, add all the integers to the sum
-    var sum = 0;
-    var index = 0;
-    while (index < array.length){
-        if (!Array.isArray(array[index])) {
-            sum += array[index];
-            index++;
-        } else {
-            return arraySum(array[index])
-        }
+    if (array.length === 0){
+        return 0;
     }
-    return sum;
+
+    var index = array.length - 1;
+    while (index >= 0){
+      if (!Array.isArray(array[index])) {
+        return (array[index] + arraySum(array.slice(0, array.length - 1)));
+      } else {
+         return arraySum(array[index]) + arraySum(array.slice(0, array.length - 1));
+      }
+    }
+
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+    var nPositive = Math.abs(n);
+    
+    if (nPositive === 0){
+        return true;
+    }
+
+    if (nPositive === 1){
+        return false
+    }
+
+    return isEven(nPositive - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+    var sign = n > 0 ? 1 : -1
+
+    n = Math.abs(n);
+
+    if (n === 0){
+        return 0;
+    }
+
+    return sign*(n - 1) + sign*(sumBelow(n - 1));
 };
 
 // 6. Get the integers within a range (x, y).
